@@ -32,10 +32,10 @@ DMA 控制器相关源码位于 `drivers/dma` 目录下：
 drivers/dma
 |--dmaengine.c dmaengine.h      #内核 DMA 框架代码
 |--dmatest.c                    #内核 DMA 测试代码
-|--mmp_pdma.c                   #K3 PDMA 控制器驱动（上游 mainline）
+|--mmp_pdma.c                   #K3 PDMA 控制器驱动
 ```
 
-K3 使用的 PDMA 驱动为上游 mainline 的 `mmp_pdma.c`，compatible 为 `spacemit,k1-pdma`。
+K3 使用的 PDMA 驱动文件为 `mmp_pdma.c`，compatible 为 `spacemit,k1-pdma`。
 
 ## 关键特性
 
@@ -115,7 +115,7 @@ pdma1: pdma@f0600000 {
 };
 ```
 
-> **注意：** K3 的 `#dma-cells` 为 1（仅需指定 DMA 请求号），在 DTS 中引用 DMA 通道时按该格式填写即可。
+> **注意：** K3 的 `#dma-cells = <1>`（仅需指定 DMA 请求号），因此设备节点引用 DMA 资源时应写成 `dmas = <&pdma 64>` 或 `dmas = <&pdma DMA_SSP0_TX>` 这种 **一个 phandle + 一个请求号** 的格式。
 
 #### DMA-Slave 使用 DMA 的配置示例
 
